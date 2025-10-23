@@ -3,8 +3,8 @@ Author:Jackson Lieberman
 Sources:Mr. Campbell, https://stackoverflow.com/questions/41585078/how-do-i-read-and-write-csv-files, https://stackoverflow.com/questions/10303797/print-floating-point-values-without-leading-zero
 Description: Determines the price to ship a given peice of postage based off its dimentions and distance traveled
 Challenges: Takes the data in a CSV
-Date:10/
-Bugs: doesnt give like .80 gives .8 instead
+Date:10/23
+Bugs: 
 '''
 import csv
 
@@ -120,7 +120,7 @@ def postage_class(l, w, h, travel_dist):
         return price
     else:# if no values are meet then return that the piece of postage is unmailable.
         return 'UNMAILABLE'
-
+    
 
 def main():    
     '''
@@ -139,6 +139,9 @@ def main():
 
             if price == 'UNMAILABLE':   #fall back if package is unmailable
                 print('UNMAILABLE')
+            elif len(price)==2: #adds a 0 so there are 2 sigfigs after the zero 
+                price= price+'0'
+                print(price)
             else:
                 print(price)
         except TypeError: #if the code cant run then break due to blank lines then stop the code
