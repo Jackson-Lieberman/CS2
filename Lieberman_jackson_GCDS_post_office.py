@@ -1,13 +1,11 @@
 '''
 Author:Jackson Lieberman
-Sources:Mr. Campbell, 
+Sources:Mr. Campbell
 Discription: Determines the price to ship a given peice of postage based off its dimentions and distance traveled
-Challenges: Takes the data in a CSV and can print the output in a CSV
-Date:10/
+Challenges: 
+Date:10/19
 Bugs:
 '''
-import csv
-
 
 def data_parse(data):
     '''
@@ -115,4 +113,5 @@ def main():
 
 
 main()
+
 
