@@ -1,17 +1,32 @@
 '''
 Author:Jackson Lieberman
-Sources:Mr. Campbell
-Discription: Determines the price to ship a given peice of postage based off its dimentions and distance traveled
-Challenges: 
-Date:10/19
-Bugs:
+Sources:Mr. Campbell, https://stackoverflow.com/questions/41585078/how-do-i-read-and-write-csv-files, https://stackoverflow.com/questions/10303797/print-floating-point-values-without-leading-zero
+Description: Determines the price to ship a given peice of postage based off its dimentions and distance traveled
+Challenges: Takes the data in a CSV
+Date:10/
+Bugs: doesnt give like .80 gives .8 instead
 '''
+import csv
 
-def data_parse(data):
+
+def open_file(filepath):
     '''
-    Parses given data into variables for each value
+    Opens a CSV file for reading.
     Args:
-        data(str): the string of data the function takes in
+        filepath (str): path to the CSV file
+    Returns:
+        f (file object): the file with data
+        reader (csv.reader): CSV reader over the file
+    '''
+    file = open(filepath, mode='r', newline='')
+    data = csv.reader(file)
+    return data
+
+def read_file(reader):
+    '''
+    Iterates over rows from a CSV reader
+    Args:
+        reader (csv.reader): CSV reader
     Returns:
         l: length of the given postage
         w: width of the given postage
@@ -19,14 +34,28 @@ def data_parse(data):
         start_zip: the zipcode that the postage will start at
         end_zip: the zipcode that the postage is being delivered to
     '''
-    data = data.split(', ') #splits data by commas to get a list of each individual peice of data
-    #sets each peice of data to a variable and defines the its type
-    l = float(data[0])
-    w = float(data[1])
-    h = float(data[2])
-    start_zip = int(data[3])
-    end_zip = int(data[4])
-    return l , w, h ,start_zip, end_zip # returns each peice of data
+    first_row_peeked = False #variable for if the code has checked for a header
+    for row in reader:
+        # blank lines
+        if not row or all(c.strip() == '' for c in row):    
+            continue
+
+        # if there is a header than skip that row
+        if not first_row_peeked: #if the first row hasnt been checked
+            first_row_peeked = True
+            try: #try and if you cant make the data a float you know its a header because there must be a string
+                float(row[0])
+            except ValueError:
+                
+                continue
+
+    
+        l = float(row[0])
+        w = float(row[1])
+        h = float(row[2])
+        start_zip = int(row[3])
+        end_zip = int(row[4])
+        return l, w, h, start_zip, end_zip
 
     
 def zip_zone(zip):
@@ -93,25 +122,28 @@ def postage_class(l, w, h, travel_dist):
         return 'UNMAILABLE'
 
 
-
 def main():    
     '''
-    Runs all funtions
+    Runs all functions
     Args:
         none
     '''
-    data = input('data:')
-    l, w, h, start_zip, end_zip = data_parse(data) #parses the data into 5 individual variables
-    travel_dist = abs(zip_zone(start_zip) - zip_zone(end_zip)) #takes the absolute value of the difference between the zipcodes
+    
+    data = open_file(r'C:\Users\jlieberman27\Desktop\CS2\Postage_data.csv')
+    while True:
+        try: #tries to run the code
+            l, w, h, start_zip, end_zip = read_file(data) #parses the data into 5 individual variables
+            travel_dist = abs(zip_zone(start_zip) - zip_zone(end_zip)) #takes the absolute value of the difference between the zipcodes
 
-    price = postage_class(l, w, h, travel_dist) #finds the price
+            price = str(postage_class(l, w, h, travel_dist)).lstrip('0') #finds the price and makes it a string so it can strip leading zeros
 
-    if price == 'UNMAILABLE':   #fall back if package is unmailable
-        print('UNMAILABLE')
-    else:
-        print(price) 
+            if price == 'UNMAILABLE':   #fall back if package is unmailable
+                print('UNMAILABLE')
+            else:
+                print(price)
+        except TypeError: #if the code cant run then break due to blank lines then stop the code
+            break
 
 
 main()
-
 
