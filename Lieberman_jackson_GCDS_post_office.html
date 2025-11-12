@@ -1,6 +1,109 @@
 
 <!DOCTYPE html>
 <html lang="en">
+  <style>
+    /* Add CSS styles here */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        width: 100%;
+        max-width: 400px;
+    }
+
+    h2 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box; 
+      font-size: 16px;
+    }
+
+    input[type="number"]:focus {
+        outline: none;
+        border-color: #007BFF;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #28a745; /* Green for success/result */
+      text-align: center;
+    }
+
+    #tips {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #555;
+      text-align: center;
+      padding: 10px;
+      border-top: 1px solid #eee;
+    }
+    
+    
+    .navbar {
+      overflow: hidden;
+      background-color: #333;
+      width: 100%;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .navbar a {
+      display: inline-block;
+      color: white;
+      text-align: center;
+      padding: 14px 20px;
+      text-decoration: none;
+    }
+
+    .navbar a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    .navbar a.active {
+      background-color: #007BFF;
+      color: white;
+    }
+
+</style>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +116,7 @@
     Challenges:
     Date:10/30
     Bugs: 
-    /*
+    */
 
 
     function zipzone(zip) {
@@ -40,7 +143,7 @@
         zone = 6;
     }
     return zone;
-        }
+    }
 
 
     function postage_class(length, width, height, travel_dist) {
@@ -135,6 +238,11 @@
   </script>
 </head>
 <body>
+    <div class="navbar">
+    <a href="Lieberman_jackson_temperature_calculator.html">Temperature calculator</a>
+    <a href="Lieberman_jackson_BMI_calculator.html">BMI calculator</a>
+    <a class="active" href="Lieberman_jackson_GCDS_post_office.html">Post office</a>
+  </div>
   <h2>Determine the price to ship a given peice of postage based on its dimentions and distance traveled </h2>
 
   <!-- Input fields -->

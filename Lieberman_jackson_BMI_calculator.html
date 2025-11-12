@@ -78,6 +78,32 @@
       padding: 10px;
       border-top: 1px solid #eee;
     }
+    
+    .navbar {
+      overflow: hidden;
+      background-color: #333;
+      width: 100%;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .navbar a {
+      display: inline-block;
+      color: white;
+      text-align: center;
+      padding: 14px 20px;
+      text-decoration: none;
+    }
+
+    .navbar a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    .navbar a.active {
+      background-color: #007BFF;
+      color: white;
+    }
 
   </style>
   <script>
@@ -169,6 +195,11 @@
   </script>
 </head>
 <body>
+  <div class="navbar">
+    <a href="Lieberman_jackson_temperature_calculator.html">Temperature calculator</a>
+    <a class="active" href="Lieberman_jackson_BMI_calculator.html">BMI calculator</a>
+    <a href="Lieberman_jackson_GCDS_post_office.html">Post office</a>
+  </div>
   <h2>Determine the BMI of a person based off their age, height and weight</h2>
 
   <!-- Input fields -->
