@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jackson Lieberman- Postage price calculator</title>
+    <style>
+    /* Add CSS styles here */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        width: 100%;
+        max-width: 400px;
+    }
+
+    h2 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box; 
+      font-size: 16px;
+    }
+
+    input[type="number"]:focus {
+        outline: none;
+        border-color: #007BFF;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #28a745; /* Green for success/result */
+      text-align: center;
+    }
+
+    #tips {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #555;
+      text-align: center;
+      padding: 10px;
+      border-top: 1px solid #eee;
+    }
+    
+    .navbar {
+      overflow: hidden;
+      background-color: #333;
+      width: 100%;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .navbar a {
+      display: inline-block;
+      color: white;
+      text-align: center;
+      padding: 14px 20px;
+      text-decoration: none;
+    }
+
+    .navbar a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    .navbar a.active {
+      background-color: #007BFF;
+      color: white;
+    }
+
+  </style>
+  <script>
+        /*
+    Author:Jackson Lieberman
+    Sources:Mr. Campbell, Julian
+    Description: calculates someones BMI and gives health tips based off of it
+    Challenges:
+    Date:11/12
+    Bugs: 
+    */
+    function BMI_calc(mass, height) {
+    /*
+    calculates someones BMI
+    Args:
+       mass (int): the weight of the person in pounds
+       height (int): the height of the person in inches
+    Returns:
+        BMI: the BMI of the person
+ 
+    */
+        if (height <= 0 || mass <= 0) {
+            return "Invalid input";
+        }
+
+        let bmi = (703 * parseFloat(mass)) / (parseFloat(height) * parseFloat(height));
+        return bmi;
+    }
+
+    function health_calc(age, bmi) {
+    /*
+    Tells someone if they are healthy or not based off of their BMI and age
+    Args:
+       age (int): the age of the person
+       bmi (float): the height of the person in inches
+    Returns:
+        health: if the person is healthy and tips on what to do to improve
+ 
+    */
+        if (age <= 0 || bmi == 'Invalid input') {
+            return "Invalid input";
+        }
+
+    let status = "";
+    let tips = "";
+
+    if (bmi < 18.5) { //if your bmi score is within a certan range declare healthy, underweight, overweight and obese
+        status = "Underweight";
+        tips = "Consider increasing calorie intake with healthy foods and consulting a healthcare professional."; //gives tips based of bmi
+        color = "#ffc107"; //sets the color based on the results
+    } else if (bmi >= 18.5 && bmi < 24.9) {
+        status = "Normal weight";
+        tips = "Maintain your current healthy lifestyle with balanced diet and regular exercise.";
+        color = "#28a745";
+    } else if (bmi >= 25.0 && bmi < 29.9) {
+        status = "Overweight";
+        tips = "Focus on a balanced diet, portion control, and regular physical activity to reach a healthy weight range.";
+        color = "#fd7e14";
+    } else { // bmi >= 30
+        status = "Obese";
+        tips = "It is recommended to speak with a healthcare provider about a structured weight management plan.";
+        color = "#dc3545"; 
+    }
+
+    return `Your BMI status is: ${status}. Tips: ${tips}`;
+
+    }
+
+
+    function main() {
+      // Get values from the input fields
+      let age = document.getElementById("age").value;
+      let height = document.getElementById("height").value;
+      let weight = document.getElementById("weight").value;
+
+
+      let bmiValue = BMI_calc(weight, height); 
+      let health = health_calc(age, BMI);
+
+      // Display the result inside the <p> tag
+      document.getElementById("result").innerText = "BMI: " + BMI;
+      document.getElementById("tips").innerText = health;
+
+
+    if (bmiValue === "Invalid input" || healthInfo === "Invalid input") { //fall back if there is an error
+        resultElement.innerText = "Invalid input: Please enter positive values for age, height, and weight.";
+        resultElement.style.color = "#dc3545"; // Red color for error
+        tipsElement.innerText = "";
+      } else {
+          // Display the result inside the <p> tag
+          resultElement.innerText = "BMI: " + bmiValue.toPrecision(4);//sets the sig figs to only 2 after the decimal
+          tipsElement.innerText = healthInfo.message;  
+          tipsElement.style.color = healthInfo.color;
+          resultElement.style.color = '#28a745'; // Reset result color for success
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="navbar">
+    <a href="Lieberman_jackson_temperature_calculator.html">Temperature calculator</a>
+    <a class="active" href="Lieberman_jackson_BMI_calculator.html">BMI calculator</a>
+    <a href="Lieberman_jackson_GCDS_post_office.html">Post office</a>
+  </div>
+  <h2>Determine the BMI of a person based off their age, height and weight</h2>
+
+  <!-- Input fields -->
+  <input type="number" id="age" placeholder="Enter age"><br>
+  <input type="number" id="height" placeholder="Enter height (Inches)"><br>
+  <input type="number" id="weight" placeholder="Enter weight (Pounds)"><br>
+
+  <!-- Button that calls the function -->
+  <button onclick="main()">calculate!</button>
+
+  <!-- Area to display the result -->
+  <p id="result"></p>
+  <p id="tips"></p>
+</body>
+</html>
