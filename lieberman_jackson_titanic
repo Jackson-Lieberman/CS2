@@ -9,3 +9,7 @@ try:
             #print(row[name_index])
 except FileNotFoundError:
     print("Error: 'titanic.csv' file not found.")
+
+
+
+with open("females.csv", 'x') as file:
