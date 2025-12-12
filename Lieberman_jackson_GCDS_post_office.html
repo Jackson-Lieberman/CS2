@@ -130,6 +130,10 @@
         zone: the zone that the zipcode is in
     */
         
+     let zone = null;
+      
+    const zipNum = parseInt(zip, 10); // changes zipcode to a number 
+
     if (zip >= 1 && zip <= 6999) {
         //set the zone variable to the according zone
         zone = 1;
@@ -166,7 +170,7 @@
             return 0.20 + (0.03 * travel_dist);
         } else if ((length > 4.25 && length <= 6) && (width > 6 && width <= 11.5) && (height >= 0.007 && height <= 0.015)) {
             return 0.37 + (0.03 * travel_dist);
-        } else if ((length >= 3.5 && length <= 6.125) && w(idth >= 5 && width <= 11.5) && (height > 0.016 && height <= 0.25)) {
+        } else if ((length >= 3.5 && length <= 6.125) && (width >= 5 && width <= 11.5) && (height > 0.016 && height <= 0.25)) {
             return 0.37 + (0.04 * travel_dist);
         } else if ((length > 6.125 && length <= 24) && (width > 11 && width <= 18) && (height > 0.25 && height <= 0.5)) {
             return 0.60 + (0.05 * travel_dist);
