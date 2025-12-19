@@ -1,11 +1,10 @@
 """
 Titanic Dataset Analysis 
 Student Name: Jackson Lieberman
-Date: _________________
+Date: 12/18/25
 Bonuses:
 Bugs:
-Log: 
-
+Log: 1.0
 
 Complete the functions below to analyze the Titanic dataset.
 """
@@ -58,7 +57,7 @@ def calculate_basic_stats(headers, passengers):
     female_total=0
 
     sex_index = headers.index('Sex')+1                                                  #finds the index of the sex column
-    survived_index = headers.index('Survived')+1                                        #finds the index of the survived column
+    survived_index = headers.index('Survived')                                          #finds the index of the survived column
   
     for line in passengers:                                                             #for every line
         if line[sex_index] == 'male':                                                   #check if the passenger is male
@@ -207,8 +206,9 @@ def calculate_age_statistics(headers, passengers):
     survivor_ages = []
     dead_ages = []
     
+    headers.append('FamilySize')
     age_index = headers.index('Age')+1                                                  #finds the index of the age column
-    survived_index = headers.index('Survived')+1                                        #finds the index of the survived column
+    survived_index = headers.index('Survived')                                          #finds the index of the survived column
     
     for passenger in passengers:
                                                                                         # sets the age of each passenger to a string
@@ -252,19 +252,23 @@ def family_analysis(headers, passengers):
         passengers (list): List of passenger records
     """
 
-    headers.append('FamilySize')                                                        #adds a new header for new column
+    
+    sibsp_index = headers.index('SibSp')+1                                                #sibsp index
+    parch_index = headers.index('Parch')+1                                                #parch index
+    survived_index = headers.index('Survived')                                          #survived index
 
-    sibsp_index = headers.index('SibSp')+1                                              #finds the index of the sibsp column
-    parch_index = headers.index('Parch')                                                #finds the index of the parch column
-    survived_index = headers.index('Survived')                                          #finds the index of the survived column
-
-    for passenger in passengers:
-                                                                                        # Convert SibSp and Parch to integers and calculate FamilySize
-        sibsp = int(passenger[sibsp_index])
-        parch = int(passenger[parch_index])
-        family_size = sibsp + parch + 1                                                 #adds one for the passenger
-                                                                                        # to the passenger's data list
-        passenger.append(str(family_size))
+   
+    if 'FamilySize' not in headers:                                                     #only will add the family size header if its not there
+        headers.append('FamilySize')
+        family_index = headers.index('FamilySize')+1                                      # set it to the last index
+        
+        for passenger in passengers:
+            sibsp = int(passenger[sibsp_index])
+            parch = int(passenger[parch_index])
+                                                                                        # Append the calculation to the passenger list
+            passenger.append(str(sibsp + parch + 1))
+    else:
+        family_index = headers.index('FamilySize')
 
     print("\n Family Survival Patterns Analysis")
 
@@ -272,8 +276,8 @@ def family_analysis(headers, passengers):
     family_stats = {}
 
     for passenger in passengers:
-        if passenger[-1] != 'N/A':                                                      # Use the added FamilySize value
-            size = int(passenger[-1])
+        if passenger[family_index] != 'N/A':                                                      # Use the added FamilySize value
+            size = int(passenger[family_index])
             survived = int(passenger[survived_index])
 
             if size not in family_stats:
@@ -315,7 +319,7 @@ def family_analysis(headers, passengers):
     elif alone_rate > family_rate:
         print("Conclusion: Traveling alone improved survival chances compared to traveling with family.")
     else:
-        print("Conclusion: Survival chances were roughly equal.")
+        print("Conclusion: Survival chances were equal.")
 
 
 def class_analysis(headers, passengers):
@@ -439,60 +443,149 @@ def write_children(headers, passengers, output_file):
 
 def generate_analysis_report(headers, passengers, output_file):
     """
-    Generates a comprehensive analysis report.
-    
-    Args:
+    Generates a comprehensive survival analysis report:
+    Overall stats
+    Breakdown by gender, class, age group
+    Makes a most likely to survie profile
+    Handles missing ages (Unknown, excluded from average age)
+    Saves report to a text file
+    Args:   
         headers (list): List of column names
         passengers (list): List of passenger records
         output_file (str): Name of output file
     """
 
+                                                                                            # Column indices
+    survived_index = headers.index("Survived")
+    sex_index = headers.index("Sex")+1
+    pclass_index = headers.index("Pclass")
+    age_index = headers.index("Age")+1
 
-    survived_index = headers.index("Survived")+1                                        #finds the index of the survival column
-    age_index = headers.index('Age')+1                                                  #finds the index of the age column
-    class_index = headers.index('Pclass')+1                                             #finds the index of the Class column
-    sex_index = headers.index('Sex') +1                                                 #finds the index of the gender column
+                                                                                            # initalize variables
+    total = 0
+    survivors = 0
 
-    total_passengers = len(passengers)                                                  #sets teh total passengers to the length of passengers
-    total_survived = 0 
-    total_age_sum = 0
-    age_count = 0
+                                                                                            # Avg age 
+    age_sum = 0.0
+
+                                                                                            # Gender counters: female, male and if they survived
+
+    g_total_f = 0
+    g_surv_f = 0
+    g_total_m = 0
+    g_surv_m = 0
+
+                                                                                            # Class totals/survivors
+    c1_total = c1_surv = 0
+    c2_total = c2_surv = 0
+    c3_total = c3_surv = 0
+
+                                                                                            # Age group totals/survivors: child, adult, senior
+    child_total = child_surv = 0
+    adult_total = adult_surv = 0
+    senior_total = senior_surv = 0
+
+    for passenger in passengers:
+            total += 1
+
+            survived = int(passenger[survived_index])
+            survivors += survived
+
+            sex = str(passenger[sex_index]).strip().lower()
+            clas = int(passenger[pclass_index])  # 1,2,3
+
+            age_str = str(passenger[age_index]).strip()
+            if age_str == "":
+                age_value = 0
+            else:
+                age_value = float(age_str)
+
+            age_sum += age_value
+
+            # Age groups
+            if age_value < 18:
+                child_total += 1
+                child_surv += survived
+            elif age_value <= 60:
+                adult_total += 1
+                adult_surv += survived
+            else:
+                senior_total += 1
+                senior_surv += survived
+
+            # Class totals
+            if clas == 1:
+                c1_total += 1
+                c1_surv += survived
+            elif clas == 2:
+                c2_total += 1
+                c2_surv += survived
+            else:
+                c3_total += 1
+                c3_surv += survived
+
+            # Gender totals
+            if sex == "female":
+                g_total_f += 1
+                g_surv_f += survived
+            elif sex == "male":
+                g_total_m += 1
+                g_surv_m += survived
+
+    survival_rate = (survivors / total) * 100
+    avg_age = (age_sum / total)  
+
+                                                                                           
+                                                                                            #calculate survival rates for each characteristic
+    
+    c1_survival_rate = (c1_surv / c1_total) * 100                                              
+    c2_survival_rate = (c2_surv / c2_total) * 100 
+    c3_survival_rate = (c3_surv / c3_total) * 100 
+    child_survival_rate = (child_surv/child_total)*100 
+    adult_survival_rate = (adult_surv/adult_total)*100 
+    senior_survival_rate = (senior_surv/senior_total)*100
+    male_survival_rate = (g_surv_m/g_total_m)*100
+    female_survival_rate=(g_surv_f/g_total_f)*100
+                                                                                            #calcuate the best survival rate for each characteristic
+    best_gender= "male" if  male_survival_rate> female_survival_rate else "female"
+    best_class = "1" if (c1_survival_rate > c2_survival_rate and c1_survival_rate > c3_survival_rate) else \
+             ("2" if c2_survival_rate > c3_survival_rate else "3")
+    best_age_group = "Child (<18)" if (child_survival_rate > adult_survival_rate and child_survival_rate > senior_survival_rate) else \
+                 ("Adult (18-60)" if adult_survival_rate > senior_survival_rate else "Senior (>60)")
 
 
-    for passenger in passengers:                                                        #for every passenger calculate their different values
-        survived = int(passenger[survived_index])
-        age = passenger[age_index]
+    report = ""
+    report += "titanic survival report\n"
 
-        total_survived += survived 
-        
-        if len(age) == 0:
-                                                                                        #fall back if age isnt there
-            age = 0
-        
-        total_age_sum += float(age)                                                     #adds the age to the totalsum of ages
-        age_count += 1
-        
-                                                                                        # Calculate average age by adding all ages and diving by the number of ages
-    average_age = total_age_sum / age_count
- 
-    survival_rate = (total_survived / total_passengers) * 100 
+    report += "totals\n"
+    report += f"Total Passengers: {total}\n"
+    report += f"Survivors: {survivors}\n"
+    report += f"Survival Rate: {survival_rate:.1f}%\n"
+    report += f"Average Age (missing ages counted as 0): {avg_age:.2f}\n\n"
 
-                                                                                        # Generate the report string
-    report_content = f'''analysis report\n
-    Total Passengers Analyzed: {total_passengers}\n
-    Total Survivors: {total_survived}\n
-    Overall Survival Rate: {survival_rate:.2f}%\n
-    Average Age: {average_age:.2f}\n
-    Survival Rates by Passenger Class'''
+    report += "breakdown by gender\n"
+    report += f"female: {(g_surv_f/g_total_f)*100:.1f}% ({g_surv_f}/{g_total_f})\n" 
+    report += f"male:   {(g_surv_m/g_total_m)*100:.1f}% ({g_surv_m}/{g_total_m})\n\n" 
 
-    with open(output_file, 'w') as out:
-        out.write(report_content)
+    report += "Breakdwon by calss\n"
+    report += f"Class 1: {(c1_surv/c1_total)*100:.1f}% ({c1_surv}/{c1_total})\n" 
+    report += f"Class 2: {(c2_surv/c2_total)*100:.1f}% ({c2_surv}/{c2_total})\n" 
+    report += f"Class 3: {(c3_surv/c3_total)*100:.1f}% ({c3_surv}/{c3_total})\n\n"
+
+    report += "Breakdown by age group\n"
+    report += f"Child (<18):   {(child_surv/child_total)*100:.1f}% ({child_surv}/{child_total})\n" 
+    report += f"Adult (18-60): {(adult_surv/adult_total)*100:.1f}% ({adult_surv}/{adult_total})\n"
+    report += f"Senior (>60):  {(senior_surv/senior_total)*100:.1f}% ({senior_surv}/{senior_total})\n\n" 
+
+    report += "BEST PROFILE TO BOOST CHANCES OF SURVIVAL\n"
+    report += f"A {best_gender} in class {best_class} who was a {best_age_group}!\n"
+    
+
+
+    with open(output_file, "w") as out:
+        out.write(report)
 
     print(f"Successfully generated analysis report to {output_file}")
-
-    
-    
-
 
 
 
@@ -516,26 +609,25 @@ def main():
         print("2. View Age Statistics")
         print("3. View Class Analysis")
         print("4. View Family Analysis")
-        print("5. Generate All Output Files & Full Report")
+        print("5. Generate Full Report")
         print("6. Exit")
         
         choice = input("\nSelect an option (1-6): ")
 
         if choice == '1':
             calculate_basic_stats(headers, passengers)
+            write_survivors(headers, passengers, "survivors.txt")
         elif choice == '2':
             calculate_age_statistics(headers, passengers)
+            write_children(headers, passengers, "children.txt")
         elif choice == '3':
             class_analysis(headers, passengers)
+            write_first_class(headers, passengers, "first_class.txt")
         elif choice == '4':
             family_analysis(headers, passengers)
         elif choice == '5':
-            print("Generating output files...")
-            write_survivors(headers, passengers, "survivors.txt")
-            write_first_class(headers, passengers, "first_class.txt")
-            write_children(headers, passengers, "children.txt")
+            print("Generating output file...")
             generate_analysis_report(headers, passengers, "analysis_report.txt")
-            print("Files generated: survivors.txt, first_class.txt, children.txt, analysis_report.txt")
         elif choice == '6':
             print("Exiting analysis.")
             break
