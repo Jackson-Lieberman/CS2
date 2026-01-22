@@ -2,12 +2,14 @@
 Titanic Dataset Analysis 
 Student Name: Jackson Lieberman
 Date: 12/18/25
-Bonuses:
+Discription: Reads the Titanic CSV file and finds different statistics
+List of complete functions:Read_titanic_data, calculate_basic_stats, write_survivors, write_first_class, calculate_age_statistics, family_analysis, class_analysis, write_children, generate_graphs, generate_analysis_report
+Bonuses:makes all graphs using matplot lib
 Bugs:
 Log: 1.0
-
-Complete the functions below to analyze the Titanic dataset.
 """
+
+import matplotlib.pyplot as plt
 
 def read_titanic_data(filename):
     """
@@ -439,7 +441,130 @@ def write_children(headers, passengers, output_file):
 
     print(f"Successfully wrote first-class data to {output_file}")
 
+
+def generate_graphs(headers, passengers):
+    '''
+    Create 5 different charts:
+    1. Bar chart comparing survival rates by gender
+    2. Histogram showing age distribution
+    3. Bar chart showing survival rates by passenger class
+    4. Bar chart of survival
+    5. Pie chart of class distribution
+    '''
+
+    survived_index = headers.index("Survived")                                          #set the survived index
+    survived = 0                                                                        #sets the number of people who survived and died
+    died = 0
     
+    class_index = headers.index("Pclass")                                               #sets the class index
+    class1 = 0                                                                          #sets the # of people in each class and who survived
+    class2 = 0
+    class3 = 0                                                       
+    c1_survived= 0
+    c2_survived = 0
+    c3_survived= 0
+
+
+    age_index = headers.index("Age") +1                                                 #sets the age index
+    ages = []                                                                           #sets list of every age
+
+    sex_index = headers.index("Sex") + 1                                                #sets the sex index
+    m_survived=0                                                                        #sets survived vs dead by gender
+    m_died = 0
+    f_survived =0
+    f_died = 0
+
+    for p in passengers:                                                                #for every pasenger
+
+        if p[sex_index] == 'male':                                                      #finds the number of males who died vs survived
+            if p[survived_index] == '1': 
+                m_survived += 1
+            else: 
+                m_died += 1
+        elif p[sex_index] == 'female':                                                  #finds the number of females who died vs survived
+            if p[survived_index] == '1': 
+                f_survived += 1
+            else: 
+                f_died += 1
+
+
+
+        if p[survived_index] == '1':                                                    #gets the number of people who survived and died
+            survived += 1
+        else: 
+            died += 1
+        
+        
+        if p[age_index] != "":                                                          #adds all ages to the list of ages               
+            ages.append(float(p[age_index]))
+        if p[age_index] == "":                                                          #if there is no age set that age to 0 in the list
+            p[age_index]=0
+            ages.append(p[age_index])
+
+
+        if p[class_index] == '1':                                                       #counts the number of poeple in each class adding them to their respective variables
+            class1 += 1
+            if p[survived_index] == '1':                                                #adds to the survival of the clas if the person survived
+                c1_survived += 1 
+        elif p[class_index] == '2': 
+            class2 += 1
+            if p[survived_index] == '1': 
+                c2_survived += 1 
+        elif p[class_index] == '3': 
+            class3 += 1
+            if p[survived_index] == '1': 
+                c3_survived += 1 
+
+    c1_rate = (c1_survived / class1 * 100)                                              #calculates the rates of survival of each class
+    c2_rate = (c2_survived / class2 * 100) 
+    c3_rate = (c3_survived / class3 * 100) 
+
+
+    plt.figure()                                                                        #creates a new figure object
+    plt.bar(['Died', 'Survived'], [died, survived], color=['red', 'green'])             #creates a bar graph showing who died and survived in red and green
+    plt.title("Titanic Survival Counts")                                                #sets the title
+    plt.ylabel("Number of Passengers")                                                  #labels each bar
+    plt.savefig('survival_count.png')                                                   #saves the chart
+    plt.show()                                                                          #shows the chart
+
+    plt.figure()                                                                        #creates a new figure
+    labels = ['1st Class', '2nd Class', '3rd Class']                                    #label each class
+    counts = [class1, class2, class3]                                                   #set them to the counts we found before
+    plt.pie(counts, labels=labels, autopct='%1.1f%%')                                   # auto percent adds the % numbers  
+    plt.title("Passenger Class Distribution")                                           #makes the title
+    plt.savefig('class_distribution.png')                                               #saves the chart
+    plt.show()                                                                          #shows the chart
+
+    plt.figure()
+    plt.hist(ages, bins=20, color='skyblue', edgecolor='black')                         #Makes a histogram showing the age distribution
+    plt.title("Age Distribution of Passengers")                                         #makes the title
+    plt.xlabel("Age")                                                                   #labels the x axis for ages
+    plt.ylabel("Frequency")                                                             #labels the y axis for their frequency
+    plt.savefig('age_distribution.png')                                                 #saves the chart
+    plt.show()                                                                          #show the chart
+
+
+    plt.figure()
+    labels = ['Male Died', 'Male Survived', 'Female Died', 'Female Survived']           #the labels of each bar
+    counts = [m_died, m_survived, f_died, f_survived]                                   #the males who died and survived
+    colors = ['darkred', 'green', 'lightcoral', 'lightgreen']                           #the different colors of the bars on the graph
+    plt.bar(labels, counts, color=colors)                                               #creates the bar craph showing bars of who survived and died
+    plt.title("Survival Count by Gender")                                               #creates the title
+    plt.ylabel("Number of Passengers")                                                  #labels the y axis
+    plt.savefig('survival_by_gender.png')                                               # Saves the file
+    plt.show()
+
+
+    plt.figure()
+    classes = ['1st Class', '2nd Class', '3rd Class']                                   #list of classes for chart
+    rates = [c1_rate, c2_rate, c3_rate]                                                 # survival rate of each class   
+    plt.bar(classes, rates, color='teal')                                               #sets the colors of each bar
+    plt.title("Survival Rate by Passenger Class (%)")                                   #sets the title
+    plt.ylabel("Percentage Survived")                                                   #labels the y axis
+    plt.savefig('class_survival_rate.png')                                              #saves the chart
+    plt.show()
+
+
 
 def generate_analysis_report(headers, passengers, output_file):
     """
@@ -609,10 +734,11 @@ def main():
         print("2. View Age Statistics")
         print("3. View Class Analysis")
         print("4. View Family Analysis")
-        print("5. Generate Full Report")
-        print("6. Exit")
+        print("5. Generate Graphs")
+        print("6. Generate Full Report")
+        print("7. Exit")
         
-        choice = input("\nSelect an option (1-6): ")
+        choice = input("\nSelect an option (1-7): ")
 
         if choice == '1':
             calculate_basic_stats(headers, passengers)
@@ -626,9 +752,13 @@ def main():
         elif choice == '4':
             family_analysis(headers, passengers)
         elif choice == '5':
+            print("Generating graphs...")
+            generate_graphs(headers, passengers)
+            print('Generated.')
+        elif choice == '6':
             print("Generating output file...")
             generate_analysis_report(headers, passengers, "analysis_report.txt")
-        elif choice == '6':
+        elif choice == '7':
             print("Exiting analysis.")
             break
         else:
