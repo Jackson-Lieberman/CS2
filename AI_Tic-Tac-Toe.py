@@ -1,6 +1,17 @@
-# Tic-Tac-Toe
-# Your Name | Date
- 
+"""
+Ai Tic tac toe
+Student Name: Jackson Lieberman
+Date: 4/1/26
+Discription: 
+Play tic tac toe against either an ai bot or a human!
+How to run:
+Download ollama onto your machine
+-pip install openai
+-ollama run qwen2.5-coder
+Run the code!
+Bugs: 
+Log: 1.0
+"""
 import random                       
 from openai import OpenAI
 
@@ -45,11 +56,12 @@ def bot_move(board, bot_char):
         else:
             raise ValueError                                                        #if it cant then raise an error
     except:                                                                         #if he move cant be exicuted
+        print(move_str)             #FIXING
         for r in range(3):                                                          #do the first possible move
             for c in range(3):
                 if board[r][c] == " ":
                     board[r][c] = bot_char
-                    return
+                    return 
 
 def is_draw(board): 
     """Return True if the board is full and there is no winner."""
@@ -116,7 +128,7 @@ To choose the first player one of you will play a game of unscramble the word.
             print(f"Wrong! {turns} turns left.")                                    #tell the user how many turns they have left
             res = input("Rescramble? (yes/no): ").lower()                           #ask if the user wants to rescramble
             if res == "yes":                                                        #random shuffle if yes
-                letters = random.shuffle(letters)
+                random.shuffle(letters)
                 display = ''.join(letters)
             elif res == "no":                                                       #if not do nothing
                 continue
@@ -138,14 +150,20 @@ def play_game():
         [" ", " ", " "]
     ]    
 
+    
+    while True:                                                                             #checks if the input from the user was valid
+        mode = input("Would you like to play against a bot or a human? (answer b/h)").lower()   #asks if the user wants to play another player or a bot
 
-    mode = input("Would you like to play against a bot or a human? (answer b/h)").lower()   #asks if the user wants to play another player or a bot
+        if mode in ['b', 'h']:
+            break                                                                           #if it was, continue
+        print("Invalid input! Please type 'b' for bot or 'h' for human.")                   #if not then ask the question again
     current_player = first_player()                                                         #sets the first player
     game_over = False                                                                       #sets the game to not over
     bot_char = "O" if current_player == "X" else "X"                                        #makes the bot what every character the play is not
     current_player = "X"                                                                    # X always starts
 
     while not game_over:                                                                    #while the game isnt over
+        
         display_board(board)                                                                #show the board using the function
         
         if mode == 'b' and current_player == bot_char:                                      #if the player wants to play the bot 
