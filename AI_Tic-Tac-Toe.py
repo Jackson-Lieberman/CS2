@@ -5,12 +5,13 @@ Date: 4/1/26
 Discription: 
 Play tic tac toe against either an ai bot or a human!
 How to run:
-Download ollama onto your machine
--pip install openai
--ollama run qwen2.5-coder
-Run the code!
+Download the ollama software onto your machine
+In terminal:
+    pip install openai
+    ollama run qwen2.5-coder
+Run the code
 Bugs: 
-Log: 1.0
+Log: 1.2
 """
 import random                       
 from openai import OpenAI
@@ -56,7 +57,7 @@ def bot_move(board, bot_char):
         else:
             raise ValueError                                                        #if it cant then raise an error
     except:                                                                         #if he move cant be exicuted
-        print(move_str)             #FIXING
+        print(move_str)                 #FIXING
         for r in range(3):                                                          #do the first possible move
             for c in range(3):
                 if board[r][c] == " ":
@@ -117,7 +118,7 @@ To choose the first player one of you will play a game of unscramble the word.
     print("You have 3 turns to guess the word")                                                               #tell the user they have 5 turns
 
     while turns > 0:                                                                                          #repeat while you have more turns than 0
-        guess=input("Unscramble " + display + " ").lower()                                           #tells the user to unscramble the scrambled word
+        guess= input("Unscramble " + display + " ").lower()                                           #tells the user to unscramble the scrambled word
 
         if guess == word:                                                                                     #if the guess is correct
             print("You got it!")                                                                              #tell the user they were correct
@@ -126,16 +127,14 @@ To choose the first player one of you will play a game of unscramble the word.
         turns -= 1                                                                  #remove one of the turns
         if turns > 0:                                                               #if the game is still going
             print(f"Wrong! {turns} turns left.")                                    #tell the user how many turns they have left
-            res = input("Rescramble? (yes/no): ").lower()                           #ask if the user wants to rescramble
-            if res == "yes":                                                        #random shuffle if yes
+            res = input("Rescramble? (y/n): ").lower()                           #ask if the user wants to rescramble
+            if res == "y":                                                        #random shuffle if yes
                 random.shuffle(letters)
                 display = ''.join(letters)
-            elif res == "no":                                                       #if not do nothing
+            elif res == "n":                                                       #if not do nothing
                 continue
             else:                                                                   #if input isnt valid                                              #if their yes or no was said
                 print("invalid input!")                                             #tell them it was invalid
-        turns -= 1                                                                  #subtract one from their turns
-        print(word)                                                                 #show the word
     print(f"Out of turns! The word was {word}. You are O.")
     return "O"
 
@@ -184,7 +183,14 @@ def play_game():
 
 
 if __name__ == "__main__":
-    play_game()
+    while True:
+        play_game()
+        cont = input('Continue? (y/n)')
+        if cont == 'y':
+            continue
+        elif cont == 'n':
+            break
+    
 
 
 
