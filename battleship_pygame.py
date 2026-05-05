@@ -2,7 +2,7 @@
 Battleship - Pygame Version
 Student Name: Jackson Lieberman
 Sources: https://www.pygame.org/docs/, https://www.youtube.com/watch?v=AY9MnQ4x3zk, https://www.youtube.com/watch?v=y9VG3Pztok8, https://www.youtube.com/watch?v=ndtFoWWBAoE
-Bonuses: 
+Bonuses: Built in pygame
 Date:
 Description: Dot Wars in pygame
 Log: 2.0
