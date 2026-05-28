@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Personal Philosophy Survey</title>
+
+    <link rel="stylesheet"          
+          href="{{ url_for('static', filename='style.css') }}">             <!--takes the css from the css file-->
+
+</head>
+
+<body>
+      
+<div class="container">
+
+<div class="card">
+
+<h1>Personal Philosophy Survey</h1>
+
+<p>
+Default scale: 1 = strongly disagree, 5 = strongly agree (unless labeled otherwise)
+</p>
+
+<form action="/submit-data" method="get">
+
+    <label>First Name:</label><br>
+    <input type="text" name="fname"><br><br>
+
+
+<!-- EXISTENTIALISM -->
+<label>Life has no built-in meaning and it's up to me to create my own purpose.</label><br>
+<select name="Q1_existentialism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<label>I am ultimately responsible for who I become, regardless of my circumstances.</label><br>
+<select name="Q2_existentialism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<label>When facing a major life decision with no clear right answer, the freedom to choose matters more to me than finding the 'correct' path.</label><br>
+<select name="Q3_existentialism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<label>Living authentically (true to my own values) matters more than meeting others' expectations.</label><br>
+<select name="Q4_existentialism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<label>The anxiety that comes with real freedom is part of being fully alive, not something to escape.</label><br>
+<select name="Q5_existentialism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<!-- UTILITARIANISM -->
+<label>An action is right if it produces the most overall good for the most people.</label><br>
+<select name="Q1_utilitarianism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<label>If lying to one person would prevent serious harm to ten others, lying is the right call.</label><br>
+<select name="Q2_utilitarianism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<label>How likely are you to accept real personal cost if it meaningfully improved the lives of strangers?</label><br>
+<select name="Q3_utilitarianism">
+    <option value="1">Very Unlikely</option>
+    <option value="2">Unlikely</option>
+    <option value="3">Maybe</option>
+    <option value="4">Likely</option>
+    <option value="5">Very Likely</option>
+</select><br><br>
+
+<label>Rules and traditions should be followed only when following them produces better outcomes than breaking them.</label><br>
+<select name="Q4_utilitarianism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<label>When choosing between two charities, the one that helps more people per dollar is the better choice, even if the other has a more compelling story.</label><br>
+<select name="Q5_utilitarianism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<!-- TAOISM -->
+<label>The best way to live is to flow with circumstances rather than force outcomes.</label><br>
+<select name="Q1_taoism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<label>Trying too hard to control things usually creates more problems than it solves.</label><br>
+<select name="Q2_taoism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<label>How often do you step back and let go when stuck on a problem, rather than pushing harder?</label><br>
+<select name="Q3_taoism">
+    <option value="1">Never</option>
+    <option value="2">Rarely</option>
+    <option value="3">Sometimes</option>
+    <option value="4">Often</option>
+    <option value="5">Always</option>
+</select><br><br>
+
+<label>Simplicity and quietness reveal things that ambition and striving hide.</label><br>
+<select name="Q4_taoism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<label>Opposites (strength and softness, action and stillness) are two sides of the same thing, not real opponents.</label><br>
+<select name="Q5_taoism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<!-- CONFUCIANISM -->
+<label>Fulfilling my responsibilities to family and community is the foundation of a good life.</label><br>
+<select name="Q1_confucianism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<label>Respect for elders, teachers, and inherited tradition is what holds a society together.</label><br>
+<select name="Q2_confucianism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<label>When your personal desires conflict with your family, which should win?</label><br>
+<select name="Q3_confucianism">
+    <option value="1">My desires, always</option>
+    <option value="2">Usually my desires</option>
+    <option value="3">It depends equally</option>
+    <option value="4">Usually Family</option>
+    <option value="5">Family always</option>
+</select><br><br>
+
+<label>Daily practice of small virtues matters more than chasing big achievements.</label><br>
+<select name="Q4_confucianism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<label>A society works best when each person understands their role and honors it.</label><br>
+<select name="Q5_confucianism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<!-- NIHILISM -->
+<label>There is no objective meaning or purpose to human existence.</label><br>
+<select name="Q1_nihilism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<label>Moral values are human inventions and nothing is truly right or wrong.</label><br>
+<select name="Q2_nihilism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<label>When people talk about 'cosmic purpose' or 'a higher meaning,' they're usually fooling themselves.</label><br>
+<select name="Q3_nihilism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<label>In the long run, nothing anyone does really matters.</label><br>
+<select name="Q4_nihilism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<label>Traditions, institutions, and grand ideals are illusions people cling to for comfort.</label><br>
+<select name="Q5_nihilism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<!-- EMPIRICISM -->
+<label>Knowledge worth trusting comes from observation and evidence, not abstract reasoning alone.</label><br>
+<select name="Q1_empiricism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<label>I'm skeptical of any claim that can't in principle be tested or checked against experience.</label><br>
+<select name="Q2_empiricism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<label>When two people disagree, I trust the one with data over the one with the more elegant theory.</label><br>
+<select name="Q3_empiricism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<label>Even my strongest intuitions should be revised if the evidence contradicts them.</label><br>
+<select name="Q4_empiricism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<label>What we can measure tells us more about reality than what we can imagine.</label><br>
+<select name="Q5_empiricism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<!-- STOICISM -->
+<label>How often do you focus your energy on what you can control and accept the rest?</label><br>
+<select name="Q1_stoicism">
+    <option value="1">Never</option>
+    <option value="2">Rarely</option>
+    <option value="3">Sometimes</option>
+    <option value="4">Often</option>
+    <option value="5">Always</option>
+</select><br><br>
+
+<label>External events don't disturb me but my judgments about them do.</label><br>
+<select name="Q2_stoicism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<label>How often is your first instinct after something bad happens 'what's in my power here?' rather than 'why me?'</label><br>
+<select name="Q3_stoicism">
+    <option value="1">Never</option>
+    <option value="2">Rarely</option>
+    <option value="3">Sometimes</option>
+    <option value="4">Often</option>
+    <option value="5">Always</option>
+</select><br><br>
+
+<label>Living with virtue matters more than achieving pleasure or avoiding pain.</label><br>
+<select name="Q4_stoicism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+<label>Strong emotions like anger or envy are signs I've misjudged a situation, not feelings to act on.</label><br>
+<select name="Q5_stoicism">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+</select><br><br>
+
+
+    <button type="submit">
+        Submit
+    </button>
+
+</form>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

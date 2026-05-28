@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Results</title>
+
+    <link rel="stylesheet"                                              
+          href="{{ url_for('static', filename='style.css') }}">             <!--takes the css from the css file-->
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<h1>Survey Submitted</h1>
+
+<p>Thank you {{ fname }}!</p>
+
+<p>
+<p>results outputted to responses.csv</p>
+<p>{{ fname }}, here's your philosophy breakdown:</p>                       <!-- prints out that this is their break down and their name.-->
+<p>Existentialism: {{ existentialism }}%</p>                                <!--prints existentialism percentage-->
+<p>Utilitarianism: {{ utilitarianism }}%</p>                                <!--prints utilitarianism percentage-->
+<p>Taoism: {{ taoism }}%</p>                                                <!--prints taoism percentage-->
+<p>Confucianism: {{ confucianism }}%</p>                                    <!--prints confucianism percentage-->
+<p>Nihilism: {{ nihilism }}%</p>                                            <!--prints nihilism percentage-->
+<p>Empiricism: {{ empiricism }}%</p>                                        <!--prints empiricism percentage-->
+<p>Stoicism: {{ stoicism }}%</p>                                            <!--prints stoicism percentage-->
+</p>
+
+</div>
+
+</div>
+
+</body>
+
+</html>
